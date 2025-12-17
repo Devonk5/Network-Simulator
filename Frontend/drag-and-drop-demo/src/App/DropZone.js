@@ -1,21 +1,21 @@
 import React, { forwardRef } from 'react';
 import { useDrop } from 'react-dnd';
 
-const DropZone = forwardRef(({ onDrop, onMove, children }, ref) => {
+const DropZone = forwardRef(({ onDrop, onMove, onClick, children }, ref) => {
   const [, drop] = useDrop(() => ({
     accept: ['item', 'sandboxItem'],
     drop: (item, monitor) => {
       const offset = monitor.getClientOffset();
-      const boundingRect = ref.current.getBoundingClientRect();
-      const x = offset.x - boundingRect.left;
-      const y = offset.y - boundingRect.top;
+      if (!offset || !ref.current) return;
 
-      if (item.index !== undefined) {
-        // moving existing sandbox item
-        onMove(item.index, x, y);
+      const rect = ref.current.getBoundingClientRect();
+
+      if (item.id !== undefined) {
+        // Moving existing sandbox item
+        onMove(item.id, offset.x - rect.left, offset.y - rect.top);
       } else {
-        // creating new item from sidebar
-        onDrop({ ...item, x, y });
+        // Creating new item from sidebar
+        onDrop(item, offset.x, offset.y);
       }
     },
   }));
@@ -26,6 +26,7 @@ const DropZone = forwardRef(({ onDrop, onMove, children }, ref) => {
         drop(node);
         if (ref) ref.current = node;
       }}
+      onClick={onClick}  // ← handle background clicks
       style={{
         width: '100%',
         height: '100%',

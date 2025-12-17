@@ -1,30 +1,21 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
 
-// Assign colors and icons based on the item name
 const getColor = (name) => {
   switch (name) {
-    case 'Switch':
-      return 'lightgreen';
-    case 'Router':
-      return 'lightcoral';
-    case 'Host':
-      return 'lightblue';
-    default:
-      return 'lightgray';
+    case 'Switch': return 'lightgreen';
+    case 'Router': return 'lightcoral';
+    case 'Host': return 'lightblue';
+    default: return 'lightgray';
   }
 };
 
 const getIcon = (name) => {
   switch (name) {
-    case 'Switch':
-      return '🔀';
-    case 'Router':
-      return '📡';
-    case 'Host':
-      return '💻';
-    default:
-      return '❓';
+    case 'Switch': return '🔀';
+    case 'Router': return '📡';
+    case 'Host': return '💻';
+    default: return '❓';
   }
 };
 
